@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Portfolio | Muhammad Farid Azizi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #050f08;
+      --bg2:          #091a0e;
+      --card:         #0c2115;
+      --card2:        #0f2a1a;
+      --border:       #1a4028;
+      --border-bright:#2d7a46;
+      --accent:       #2ecc71;
+      --accent-dim:   #1a7a44;
+      --accent-glow:  rgba(46,204,113,0.18);
+      --accent-glow2: rgba(46,204,113,0.08);
+      --lime:         #a3e635;
+      --teal:         #14b8a6;
+      --white:        #edfff4;
+      --muted:        #6b9e7e;
+      --pill-bg:      rgba(46,204,113,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED BG GRID ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(46,204,113,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,204,113,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      background: rgba(5,15,8,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Radial glow blobs */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(46,204,113,0.12) 0%, transparent 65%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 {
+      width: 380px; height: 380px;
+      background: rgba(46,204,113,0.08);
+      top: 10%; left: -10%;
+    }
+    .blob-2 {
+      width: 300px; height: 300px;
+      background: rgba(20,184,166,0.07);
+      bottom: 10%; right: -8%;
+    }
+
+    .hero-inner { position: relative; z-index: 2; }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--pill-bg);
+      border: 1px solid var(--accent-dim);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      margin-bottom: 2rem;
+    }
+    .hero-pill span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform: scale(1); }
+      50% { opacity:0.5; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .hero h1 .name-line1 { color: var(--white); }
+    .hero h1 .name-line2 {
+      background: linear-gradient(90deg, var(--accent) 0%, var(--lime) 60%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.83rem;
+    }
+    .badge-icon { font-size: 0.9rem; }
+    .badge-key { color: var(--muted); margin-right: 0.1rem; }
+    .badge-val { color: var(--white); font-weight: 600; }
+
+    .hero-scroll {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%,100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      position: relative; z-index: 1;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      padding: 1.5rem 2rem;
+      gap: 1rem;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.2rem;
+    }
+
+    /* ── VIDEOS SECTION ── */
+    .videos-section {
+      position: relative; z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    .section-tag {
+      display: inline-block;
+      background: var(--pill-bg);
+      border: 1px solid var(--border-bright);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 0.92rem;
+      max-width: 440px;
+    }
+
+    /* ── FILTER TABS ── */
+    .filter-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── VIDEO GRID ── */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .video-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.25s cubic-bezier(.22,.68,0,1.2),
+                  border-color 0.2s, box-shadow 0.25s;
+      position: relative;
+    }
+    .video-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(46,204,113,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .video-card:hover::before { opacity: 1; }
+    .video-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: var(--accent);
+      box-shadow: 0 16px 48px rgba(46,204,113,0.15), 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    /* Project card accent */
+    .video-card.project-card {
+      border-color: var(--border-bright);
+    }
+    .video-card.project-card:hover {
+      box-shadow: 0 16px 48px rgba(46,204,113,0.25), 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .thumb-wrap {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #040d07;
+      overflow: hidden;
+    }
+    .thumb-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .video-card:hover .thumb-wrap img {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+
+    /* Gradient overlay on thumb */
+    .thumb-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(5,15,8,0.7) 0%, transparent 50%);
+    }
+
+    .play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .play-circle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(46,204,113,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 8px rgba(46,204,113,0.2);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .video-card:hover .play-circle {
+      transform: scale(1.1);
+      background: var(--accent);
+      box-shadow: 0 0 0 12px rgba(46,204,113,0.15);
+    }
+    .play-circle svg { width: 20px; height: 20px; fill: #050f08; margin-left: 3px; }
+
+    /* Type badge on thumbnail */
+    .type-badge {
+      position: absolute;
+      top: 10px; left: 10px;
+      z-index: 3;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+    }
+    .type-badge.lab {
+      background: rgba(46,204,113,0.2);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .type-badge.project {
+      background: rgba(163,230,53,0.2);
+      border: 1px solid var(--lime);
+      color: var(--lime);
+    }
+
+    .video-meta {
+      padding: 1.1rem 1.3rem 1.3rem;
+    }
+    .video-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .label-arrow {
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      background: var(--accent-glow2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .video-card:hover .label-arrow {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+    }
+    .label-arrow svg { width: 11px; height: 11px; stroke: var(--accent); }
+    .video-yt-text {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .footer-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.25rem; }
+      .stats-inner { flex-wrap: wrap; }
+      .videos-section { padding: 3rem 1.25rem; }
+    }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Farid Azizi</div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="hero-inner">
+      <div class="hero-pill"><span></span> E-Portfolio · Software Engineering</div>
+      <h1>
+        <div class="name-line1">Muhammad Farid</div>
+        <div class="name-line2">Azizi Bin Nurahim</div>
+      </h1>
+      <p class="hero-sub">Documenting lab work and projects at Universiti Kebangsaan Malaysia through video submissions.</p>
+      <div class="badge-row">
+        <div class="badge">
+          <span class="badge-icon">🪪</span>
+          <span class="badge-key">Matric No</span>
+          <span class="badge-val">A212432</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">💻</span>
+          <span class="badge-key">Course</span>
+          <span class="badge-val">Software Engineering</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">🏫</span>
+          <span class="badge-key">University</span>
+          <span class="badge-val">UKM</span>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        scroll
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Lab Sessions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Submissions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">UKM</div>
+        <div class="stat-label">Institution</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEOS -->
+  <div class="videos-section">
+    <div class="section-header fade-in">
+      <div class="section-tag">Recorded Submissions</div>
+      <h2 class="section-title">My Work</h2>
+      <p class="section-desc">Click any card to watch the video recording on YouTube.</p>
+    </div>
+
+    <div class="filter-row fade-in">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="lab">Labs</button>
+      <button class="filter-btn" data-filter="project">Projects</button>
+    </div>
+
+    <div class="videos-grid" id="labsGrid"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Muhammad Farid Azizi Bin Nurahim</div>
+    <div class="footer-meta">A212432 &nbsp;·&nbsp; Software Engineering &nbsp;·&nbsp; Universiti Kebangsaan Malaysia</div>
+  </footer>
+
+  <script>
+    const videos = [
+      { label: "Lab 1",     url: "https://youtu.be/Kb221nysot4", id: "Kb221nysot4", type: "lab" },
+      { label: "Lab 2",     url: "https://youtu.be/Kb221nysot4", id: "Kb221nysot4", type: "lab" },
+      { label: "Lab 3",     url: "https://youtu.be/MrDTE4IqbSg", id: "MrDTE4IqbSg", type: "lab" },
+      { label: "Lab 4",     url: "https://youtu.be/TDoISDW-4Vo", id: "TDoISDW-4Vo", type: "lab" },
+      { label: "Lab 5",     url: "https://youtu.be/J16_WlWyy-M", id: "J16_WlWyy-M", type: "lab" },
+      { label: "Project 1", url: "https://youtu.be/1bj0win5zXM", id: "1bj0win5zXM", type: "project" },
+      { label: "Project 2", url: "https://youtu.be/CGArV098svQ", id: "CGArV098svQ", type: "project" },
+    ];
+
+    const grid = document.getElementById('labsGrid');
+
+    function renderCards(filter) {
+      grid.innerHTML = '';
+      const filtered = filter === 'all' ? videos : videos.filter(v => v.type === filter);
+      filtered.forEach((v, i) => {
+        const thumb = `https://img.youtube.com/vi/${v.id}/hqdefault.jpg`;
+        const isProject = v.type === 'project';
+        const card = document.createElement('a');
+        card.className = 'video-card fade-in' + (isProject ? ' project-card' : '');
+        card.href = v.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.style.transitionDelay = `${i * 0.06}s`;
+        card.innerHTML = `
+          <div class="thumb-wrap">
+            <img src="${thumb}" alt="${v.label}" loading="lazy"/>
+            <div class="play-btn">
+              <div class="play-circle">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="5,3 19,12 5,21"/>
+                </svg>
+              </div>
+            </div>
+            <span class="type-badge ${v.type}">${v.type === 'lab' ? 'Lab' : 'Project'}</span>
+          </div>
+          <div class="video-meta">
+            <div class="video-label">
+              ${v.label}
+              <div class="label-arrow">
+                <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="video-yt-text">Watch on YouTube →</div>
+          </div>`;
+        grid.appendChild(card);
+        // trigger animation
+        requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
+      });
+    }
+
+    renderCards('all');
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCards(btn.dataset.filter);
+      });
+    });
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
